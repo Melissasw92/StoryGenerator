@@ -10,11 +10,11 @@ namespace Story
                static void Main()
             {
             Console.Write("Hello Adventurer! Would you like to go on a journey with me? (y/n) ");
-            string Input = Console.ReadLine().ToUpper();
+            string Input = Console.ReadLine();
 
-            if (Input != "y" || Input != "n")
+            if (Input != "y" && Input != "n")
             {
-                Console.WriteLine("Invalud input. Y/N");
+                Console.WriteLine("Invalid input. y/n");
                 //Input = Console.ReadLine().ToUpper();
             }
             
@@ -34,23 +34,57 @@ namespace Story
             Console.Write("Every adventurer has a hero's name. What is the name of the hero in our story? ");
             maincharacter.Name = Console.ReadLine();
 
-            Console.Write($"Hello, {maincharacter.Name}! How old are you? ");
+            Console.Write($"Hello, {maincharacter.Name}! How old is your hero? ");
             maincharacter.Age = Console.ReadLine();
 
-            Console.Write("You will need a weapon for this story.");
+            Console.WriteLine("You will need a weapon for this story.\n");
 
             Weapon randomWeapons = GenerateRandonWeapon();
             maincharacter.Weapon = new Weapon(randomWeapons.Name);
-            Console.WriteLine($"You have obtained a(n) {maincharacter.Weapon.Name}. Congrats!");
+            Console.WriteLine($"You have obtained a(n) {maincharacter.Weapon.Name}. Congrats!\n");
 
-            Console.Write($"{maincharacter.Name}, aged {maincharacter.Age} with the weapon {maincharacter.Weapon.Name}. Let's find out your role in this story.");
+            Console.WriteLine("Let's find out your role in this story.");
 
             Role randomMainCharacterRole = GenerateRandomRole();
             maincharacter.Role = randomMainCharacterRole;
 
-            Console.WriteLine($"Your role in this story is {maincharacter.Role.role}.");
+            Console.WriteLine($"Your role in this story is {maincharacter.Role.role}.\n");
 
-            Location locations = GenerateRandomLocation();
+
+            Location startingLocation = GenerateRandomLocation();
+
+            Console.WriteLine($"Our hero's story begins at a {startingLocation.Name}.");
+
+            Console.WriteLine($"You are approached by a member of {startingLocation.Name}. Do you interact (y/n)?");
+            Input = Console.ReadLine();
+
+            if (Input != "y" && Input != "n")
+            {
+                Console.WriteLine("Invalid input.");
+            }
+
+            if (Input == "n")
+            {
+                Console.WriteLine($"Hello stranger! I just wanted to tell you what was happening around {startingLocation.Name}. Are you sure you don't want to hear what happened? (y/n) ");
+                Input = Console.ReadLine();
+            }
+            if (Input != "y" && Input != "n")
+            {
+                Console.WriteLine("Invalid input.");
+            }
+            if (Input == "n")
+            Console.WriteLine("I'm sure you'll hear about it eventually. Have a great day!");
+
+            if (Input == "y")
+            {
+                Console.WriteLine($"Hello {maincharacter.Name}, did you hear about what happened at {startingLocation.Name}? I wonder if anyone can help.");
+            }
+
+            Console.WriteLine($"Hero: I am just a {maincharacter.Role.role}. But I may be able to help. What happened?");
+
+            Villain startingVillain = GenerateRandomVillian();
+
+            Console.WriteLine($"Person: I heard that the {startingVillain.villainName} made an appearance here. Last time {startingVillain.villainName} was around, there was mass devistation.");
             
             }
     
@@ -60,7 +94,6 @@ namespace Story
             public string Name { get; set; } // Public getter/setter for name
             public string Age { get; set; } // Public getter/setter for age
             public string[] hairColor = { "brown", "red", "blonde", "white", "black", "gray", "silver" };
-            public string[] heightM;
             public string[] race = { "human", "elf", "half-elf", "fairy", "orc" };
             public string[] eyeColor = { "brown", "blue", "green", "silver", "purple", "red" };
             public Role Role { get; set; }
@@ -77,21 +110,25 @@ namespace Story
     static Role GenerateRandomRole()
     {
         Random rand = new Random();
-        string[] mainCharacterRole = { "princess", "prince", "knight", "rogue", "criminal", "king", "queen", "common folk", "wizard" };
+        string[] mainCharacterRole = { "blacksmith", "servant", "knight", "rogue", "criminal", "cook", "stable hand", "common folk", "wizard" };
         return new Role{role = mainCharacterRole[rand.Next(mainCharacterRole.Length)]};
 
     }
 
     public class Location
     {
-        public string locations { get; set; }
+        public string Name;
+        public Location (string name)
+        {
+            Name = name;
+        }
     }
     static Location GenerateRandomLocation()
     {
-        string Area;
+        
         Random rand = new Random();
         string[] locations = { "forest", "castle", "village", "mansion", "ancient runes", "tavern", "haunted moutains" };
-        return new Location { locations = locations[rand.Next(locations.Length)] };
+        return new Location(locations[rand.Next(locations.Length)]);
     }
 
     public class Villain
