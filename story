@@ -55,7 +55,7 @@ namespace Story
 
             Console.WriteLine($"Our hero's story begins at a {startingLocation.Name}.");
 
-            Console.WriteLine($"You are approached by a member of {startingLocation.Name}. Do you interact (y/n)?");
+            Console.WriteLine($"You are approached by a member of the {startingLocation.Name}. Do you interact (y/n)?");
             Input = Console.ReadLine();
 
             if (Input != "y" && Input != "n")
@@ -84,7 +84,22 @@ namespace Story
 
             Villain startingVillain = GenerateRandomVillian();
 
-            Console.WriteLine($"Person: I heard that the {startingVillain.villainName} made an appearance here. Last time {startingVillain.villainName} was around, there was mass devistation.");
+            Console.WriteLine($"Person: The {startingVillain.villainName} made an appearance here. Last time {startingVillain.villainName} was around, there was mass devistation. That thing needs to be taken care of.");
+
+            Console.WriteLine($"Dear hero, are you up for the challenge of defeating the {startingVillain.villainName}? (y/n)");
+            Input = Console.ReadLine();
+
+            if (Input != "y" && Input != "n")
+            {
+                Console.WriteLine("Invalid input.");
+            }
+            if (Input == "n")
+            {
+                Console.WriteLine("I don't blame you. Come back when you are ready to take it on.");
+            }
+            if (Input == "y")
+
+            Console.WriteLine($"Hero: We can't have that. I might just be a {maincharacter.Role.role}, with only a(n) {maincharacter.Weapon.Name}, but I will take on the {startingVillain.villainName}.");
             
             }
     
